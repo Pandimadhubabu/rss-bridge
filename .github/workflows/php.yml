@@ -12,8 +12,6 @@ jobs:
     steps:
     - name: Checkout 🛎️
     - uses: actions/checkout@v2
-       with:
-          persist-credentials: false
 
     - name: Validate composer.json and composer.lock
       run: composer validate
