@@ -1,34 +1,20 @@
-name: PHP Composer
+name: Test action Deployer PHP
 
 on:
   push:
-    branches: [ master ]
-  
+    branches:
+     [ master ]
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Deploy code to prod
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout 🛎️
-    - uses: actions/checkout@v2
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
-      
-    - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Deploy
+        uses: musps/action-deployer-php@master
         with:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build # The folder the action should deploy.
-          CLEAN: false
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+          args: deploy prod
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
