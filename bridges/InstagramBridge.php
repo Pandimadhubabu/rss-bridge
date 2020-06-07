@@ -201,7 +201,7 @@ class InstagramBridge extends BridgeAbstract {
 	}
 
 	protected function getTextContent($media) {
-		$textContent = '(no text)';
+		$textContent = '';
 		//Process the first element, that isn't in the node graph
 		if (count($media->edge_media_to_caption->edges) > 0) {
 			$textContent = trim($media->edge_media_to_caption->edges[0]->node->text);
